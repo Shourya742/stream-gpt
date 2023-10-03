@@ -4,15 +4,21 @@ import { checkValidData } from "../utils/validate";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
   const name = useRef(null);
   const email = useRef(null);
   const password = useRef(null);
+  const dispatch = useDispatch();
   const toggleSignInForm = () => {
     setIsSignInForm(!isSignInForm);
   };
@@ -24,10 +30,28 @@ const Login = () => {
     //sign in or sign up
     if (!isSignInForm) {
       //sign up login
-      createUserWithEmailAndPassword(auth, email, password)
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
         .then((userCredential) => {
           const user = userCredential.user;
           console.log(user);
+          updateProfile(user, {
+            displayName: name.current.value,
+            photoURL:
+              "https://wallpapers.com/images/featured-small/netflix-profile-pictures-w3lqr61qe57e9yt8.webp",
+          })
+            .then(() => {
+              const { uid, email, displayName, photoURL } = auth.currentUser;
+              dispatch(addUser({ uid, email, displayName, photoURL }));
+              navigate("/browse");
+            })
+            .catch((error) => {
+              setErrorMessage(error.message);
+            });
+          navigate("/browse");
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -36,10 +60,14 @@ const Login = () => {
         });
     } else {
       //sign in logic
-      signInWithEmailAndPassword(auth, email, password)
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
         .then((userCredential) => {
           const user = userCredential.user;
-          console.log(user);
+          navigate("/browse");
         })
         .catch((error) => {
           const errorCode = error.code;

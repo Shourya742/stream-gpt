@@ -19,3 +19,13 @@ export const SUPPORTED_LANGUAGES = [
   { identifier: "hindi", name: "Hindi" },
   { identifier: "spanish", name: "Spanish" },
 ];
+
+export const MOVIE_LIST = [
+  "The Shawshank Redemption",
+  "The Godfather",
+  "The Dark Knight",
+  "12 Angry Men",
+  "Schindler's List",
+  "The Lord of the Rings: The Return of the King",
+  "Pulp Fiction",
+];

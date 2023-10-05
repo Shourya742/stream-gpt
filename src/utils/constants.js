@@ -28,4 +28,6 @@ export const MOVIE_LIST = [
   "Schindler's List",
   "The Lord of the Rings: The Return of the King",
   "Pulp Fiction",
+  "Wall Street",
+  "Kong",
 ];

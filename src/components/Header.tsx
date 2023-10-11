@@ -62,12 +62,12 @@ const Header = () => {
             </select>
           )}
           <button
-            className="py-2 px-4 my-2 bg-red-800 text-white rounded-lg"
+            className="py-2 px-4 my-2 mx-2 bg-red-800 text-white rounded-lg"
             onClick={handleGptSearchClick}>
             {!showGptSearch ? "GPT Search" : "Homepage"}
           </button>
           <img
-            className="hidden md:block w-12 h-12 "
+            className="hidden md:block w-12 h-12 m-2 "
             alt="usericon"
             src={user.photoURL}
           />
